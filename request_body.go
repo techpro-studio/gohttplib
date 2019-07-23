@@ -11,8 +11,7 @@ func GetBody(req *http.Request) (map[string]interface{}, error) {
 	err := decoder.Decode(&_map)
 	defer req.Body.Close()
 	if err != nil {
-		return nil, HTTP400(nil)
+		return nil, HTTP400(err.Error())
 	}
 	return _map, nil
 }
-

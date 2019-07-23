@@ -23,16 +23,15 @@ func (err ServerError) Write(w http.ResponseWriter) {
 }
 
 type Error struct {
-	Key         *string  `json:"key, omitempty"`
-	Description *string  `json:"description, omitempty"`
+	Key         string   `json:"key, omitempty"`
+	Description string   `json:"description, omitempty"`
 	Code        string   `json:"code"`
 	Args        []string `json:"args, omitempty"`
 }
 
 func NewError(key string, description string, code string, args []string) *Error {
-	return &Error{Key: &key, Description: &description, Code: code, Args: args}
+	return &Error{Key: key, Description: description, Code: code, Args: args}
 }
-
 
 func (err Error) WriteWithCode(code int, w http.ResponseWriter) {
 	ServerError{code, Errors{[]Error{err}}}.Write(w)
@@ -42,18 +41,16 @@ func (err Error) AsServerError(code int) error {
 	return ServerError{code, Errors{[]Error{err}}}
 }
 
-func NewServerError(statusCode int, code string, description *string, key *string, args []string) *ServerError {
+func NewServerError(statusCode int, code string, description string, key string, args []string) *ServerError {
 	return &ServerError{
 		StatusCode: statusCode,
-		Errors: Errors{Errors:
-		[]Error{{
+		Errors: Errors{Errors: []Error{{
 			Key:         key,
 			Description: description,
 			Code:        code,
-			Args:args,
+			Args:        args,
 		}}}}
 }
-
 
 func (err Error) Error() string {
 	return err.Code

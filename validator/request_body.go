@@ -1,8 +1,9 @@
 package validator
 
 import (
-	"github.com/wolvesstudio/gohttplib"
 	"net/http"
+
+	"github.com/techpro-studio/gohttplib"
 )
 
 func ValidateBody(body map[string]interface{}, validatorMap VMap) (map[string]interface{}, error) {
@@ -20,4 +21,3 @@ func GetValidatedBody(req *http.Request, validatorMap VMap) (map[string]interfac
 	}
 	return ValidateBody(body, validatorMap)
 }
-

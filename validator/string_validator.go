@@ -2,10 +2,11 @@ package validator
 
 import (
 	"fmt"
-	"github.com/johngb/langreg"
-	"github.com/wolvesstudio/gohttplib"
 	"net/url"
 	"strings"
+
+	"github.com/johngb/langreg"
+	"github.com/techpro-studio/gohttplib"
 )
 
 func StringValidator(key string) Validator {
@@ -98,8 +99,6 @@ func StringContainsValidator(key string, values []string) Validator {
 		return nil
 	}
 }
-
-
 
 func CountryValidator(key string) Validator {
 	return func(value interface{}) error {

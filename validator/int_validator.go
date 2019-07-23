@@ -1,7 +1,7 @@
 package validator
 
 import (
-	"github.com/wolvesstudio/gohttplib"
+	"github.com/techpro-studio/gohttplib"
 )
 
 type IntRange struct {
@@ -25,7 +25,6 @@ func IntValidator(key string) Validator {
 	}
 }
 
-
 func RequiredIntValidators(key string, validators ...Validator) []Validator {
 	arr := []Validator{NotEmptyValidator(key), IntValidator(key)}
 	return append(arr, validators...)
@@ -45,7 +44,6 @@ func IntInRangeValidator(key string, intRange IntRange) Validator {
 	}
 }
 
-
 func Int64InRangeValidator(key string, intRange Int64Range) Validator {
 	return func(value interface{}) error {
 		intValue := value.(int64)
@@ -59,4 +57,3 @@ func Int64InRangeValidator(key string, intRange Int64Range) Validator {
 		return nil
 	}
 }
-

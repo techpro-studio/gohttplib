@@ -2,9 +2,10 @@ package validator
 
 import (
 	"errors"
-	"github.com/wolvesstudio/gohttplib"
-	"github.com/wolvesstudio/gohttplib/utils"
 	"time"
+
+	"github.com/techpro-studio/gohttplib"
+	"github.com/techpro-studio/gohttplib/utils"
 )
 
 var timezones = []string{"Africa/Abidjan", "Africa/Accra", "Africa/Addis_Ababa", "Africa/Algiers", "Africa/Asmara",

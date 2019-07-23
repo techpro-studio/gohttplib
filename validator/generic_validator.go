@@ -1,7 +1,7 @@
 package validator
 
 import (
-	"github.com/wolvesstudio/gohttplib"
+	"github.com/techpro-studio/gohttplib"
 )
 
 type Validator func(value interface{}) error
@@ -15,10 +15,6 @@ func NotEmptyValidator(key string) Validator {
 	}
 }
 
-
-
-
-
 func BoolValidator(key string) Validator {
 	return func(value interface{}) error {
 		_, ok := value.(bool)
@@ -28,13 +24,6 @@ func BoolValidator(key string) Validator {
 		return nil
 	}
 }
-
-
-
-
-
-
-
 
 func ArrayValidator(key string) Validator {
 	return func(value interface{}) error {
@@ -46,14 +35,10 @@ func ArrayValidator(key string) Validator {
 	}
 }
 
-
-
-
 func RequiredBoolValidators(key string, validators ...Validator) []Validator {
 	arr := []Validator{NotEmptyValidator(key), BoolValidator(key)}
 	return append(arr, validators...)
 }
-
 
 func ValidateValue(value interface{}, validators []Validator) []gohttplib.Error {
 	errs := []gohttplib.Error{}

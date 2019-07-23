@@ -1,14 +1,13 @@
 package validator
 
 import (
-	"github.com/wolvesstudio/gohttplib"
+	"github.com/techpro-studio/gohttplib"
 )
 
 type FloatRange struct {
 	Upper  *float64
 	Bottom *float64
 }
-
 
 func FloatValidator(key string) Validator {
 	return func(value interface{}) error {
@@ -19,7 +18,6 @@ func FloatValidator(key string) Validator {
 		return nil
 	}
 }
-
 
 func FloatInRangeValidator(key string, floatRange FloatRange) Validator {
 	return func(value interface{}) error {
@@ -34,8 +32,6 @@ func FloatInRangeValidator(key string, floatRange FloatRange) Validator {
 		return nil
 	}
 }
-
-
 
 func RequiredFloatValidators(key string, validators ...Validator) []Validator {
 	arr := []Validator{NotEmptyValidator(key), FloatValidator(key)}
