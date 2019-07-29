@@ -47,7 +47,7 @@ func FloatParameterFromURLInRequest(r *http.Request, name string) *float64 {
 	if s == nil {
 		return nil
 	}
-	float, err := strconv.ParseFloat(*s, 64);
+	float, err := strconv.ParseFloat(*s, 64)
 	if err != nil {
 		return nil
 	}

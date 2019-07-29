@@ -1,34 +1,43 @@
 package gohttplib
 
 import (
-	"github.com/julienschmidt/httprouter"
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
 )
 
-type Router struct {
-	router *httprouter.Router
+type Router interface {
+	Get(path string, handler http.Handler)
+	Post(path string, handler http.Handler)
+	Put(path string, handler http.Handler)
+	Delete(path string, handler http.Handler)
+	ServeHTTP(w http.ResponseWriter, req *http.Request)
 }
 
-func (self *Router) Get(path string, handler http.Handler) {
-	self.router.GET(path, wrapHandler(handler))
+type DefaultRouter struct {
+	DefaultRouter *httprouter.Router
 }
 
-func (self *Router) Post(path string, handler http.Handler) {
-	self.router.POST(path, wrapHandler(handler))
+func (self *DefaultRouter) Get(path string, handler http.Handler) {
+	self.DefaultRouter.GET(path, wrapHandler(handler))
 }
 
-func (self *Router) Put(path string, handler http.Handler) {
-	self.router.PUT(path, wrapHandler(handler))
+func (self *DefaultRouter) Post(path string, handler http.Handler) {
+	self.DefaultRouter.POST(path, wrapHandler(handler))
 }
 
-func (self *Router) Delete(path string, handler http.Handler) {
-	self.router.DELETE(path, wrapHandler(handler))
+func (self *DefaultRouter) Put(path string, handler http.Handler) {
+	self.DefaultRouter.PUT(path, wrapHandler(handler))
 }
 
-func (self *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	self.router.ServeHTTP(w, req)
+func (self *DefaultRouter) Delete(path string, handler http.Handler) {
+	self.DefaultRouter.DELETE(path, wrapHandler(handler))
 }
 
-func NewRouter() *Router {
-	return &Router{httprouter.New()}
+func (self *DefaultRouter) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	self.DefaultRouter.ServeHTTP(w, req)
+}
+
+func NewDefaultRouter() *DefaultRouter {
+	return &DefaultRouter{httprouter.New()}
 }
