@@ -40,8 +40,8 @@ type Error struct {
 	Args        []string `json:"args, omitempty"`
 }
 
-func NewError(key string, description string, code string, args []string) *Error {
-	return &Error{Key: key, Description: description, Code: code, Args: args}
+func NewError(key string, description string, code string, args []string) Error {
+	return Error{Key: key, Description: description, Code: code, Args: args}
 }
 
 func (err Error) WriteWithCode(code int, w http.ResponseWriter) {
