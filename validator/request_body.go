@@ -9,7 +9,7 @@ import (
 func ValidateBody(body map[string]interface{}, validatorMap VMap) (map[string]interface{}, error) {
 	errs := ValidateMap(body, validatorMap)
 	if len(errs) > 0 {
-		return nil, gohttplib.ServerError{400, gohttplib.Errors{Errors: errs}}
+		return nil, &gohttplib.ServerError{400, gohttplib.Errors{Errors: errs}}
 	}
 	return body, nil
 }
