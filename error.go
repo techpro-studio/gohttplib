@@ -18,6 +18,14 @@ func (err ServerError) Error() string {
 	return err.Errors.Error()
 }
 
+func SafeConvertToServerError(err error)*ServerError{
+	serverError, ok := err.(ServerError)
+	if ok  {
+		return &serverError
+	}
+	return NewServerError(400, "UNDEFINED", err.Error(), "", nil)
+}
+
 func (err ServerError) Write(w http.ResponseWriter) {
 	WriteJson(w, err.Errors, err.StatusCode)
 }
