@@ -22,9 +22,9 @@ func SafeConvertToServerError(err error)*ServerError{
 	if err == nil{
 		return nil
 	}
-	serverError, ok := err.(ServerError)
+	serverError, ok := err.(*ServerError)
 	if ok  {
-		return &serverError
+		return serverError
 	}
 	return NewServerError(400, "UNDEFINED", err.Error(), "", nil)
 }
