@@ -19,6 +19,9 @@ func (err ServerError) Error() string {
 }
 
 func SafeConvertToServerError(err error)*ServerError{
+	if err == nil{
+		return nil
+	}
 	serverError, ok := err.(ServerError)
 	if ok  {
 		return &serverError
