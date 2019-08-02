@@ -18,9 +18,9 @@ func WriteJson(w http.ResponseWriter, value interface{}, code int) {
 	}
 }
 
-func WriteJsonOrError(w http.ResponseWriter, value interface{}, code int, err error){
+func WriteJsonOrError(w http.ResponseWriter, value interface{}, code int, err *ServerError){
 	if err != nil {
-		err.(ServerError).Write(w)
+		err.Write(w)
 		return
 	}
 	WriteJson(w, value, code)
