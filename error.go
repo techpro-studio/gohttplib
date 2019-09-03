@@ -26,7 +26,7 @@ func SafeConvertToServerError(err error)*ServerError{
 	if ok  {
 		return serverError
 	}
-	return NewServerError(400, "UNDEFINED", err.Error(), "", nil)
+	return NewServerError(400, "UNDEFINED", err.Error(), "undefined", nil)
 }
 
 func (err ServerError) Write(w http.ResponseWriter) {
