@@ -22,9 +22,13 @@ func SafeConvertToServerError(err error)*ServerError{
 	if err == nil{
 		return nil
 	}
-	serverError, ok := err.(*ServerError)
+	serverErrorPtr, ok := err.(*ServerError)
+	if !ok {
+		return serverErrorPtr
+	}
+	serverError, ok := err.(ServerError)
 	if ok  {
-		return serverError
+		return &serverError
 	}
 	return NewServerError(400, "UNDEFINED", err.Error(), "undefined", nil)
 }
@@ -49,7 +53,7 @@ func (err Error) WriteWithCode(code int, w http.ResponseWriter) {
 }
 
 func (err Error) AsServerError(code int) error {
-	return ServerError{code, Errors{[]Error{err}}}
+	return &ServerError{code, Errors{[]Error{err}}}
 }
 
 func NewServerError(statusCode int, code string, description string, key string, args []string) *ServerError {
@@ -64,9 +68,13 @@ func NewServerError(statusCode int, code string, description string, key string,
 }
 
 func (err Error) Error() string {
-	return err.Code
+	return err.Description
 }
 
 func (errs Errors) Error() string {
-	return fmt.Sprintf("Occured %d errors", len(errs.Errors))
+	errsStr := ""
+	for _, item := range errs.Errors{
+		errsStr += item.Description
+	}
+	return fmt.Sprintf("Occured %d errors. Details: %s", len(errs.Errors), errsStr)
 }
