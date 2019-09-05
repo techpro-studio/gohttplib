@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/url"
 	"strings"
-
 	"github.com/johngb/langreg"
 	"github.com/techpro-studio/gohttplib"
 )
@@ -24,7 +23,7 @@ func StringLengthValidator(length int, key string) Validator {
 	return func(value interface{}) error {
 		stringValue := value.(string)
 		if len(stringValue) < length {
-			return gohttplib.NewError(key, fmt.Sprintf("%@ should be minimum %d characters", strings.ToUpper(key), length),
+			return gohttplib.NewError(key, fmt.Sprintf("%s should be minimum %d characters", strings.ToUpper(key), length),
 				"STRING_LENGTH_ERROR", []string{key, fmt.Sprintf("%d", length)})
 
 		}
