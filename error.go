@@ -33,6 +33,10 @@ func SafeConvertToServerError(err error)*ServerError{
 	return NewServerError(400, "UNDEFINED", err.Error(), "undefined", nil)
 }
 
+func WriteErr(w http.ResponseWriter, err error){
+	SafeConvertToServerError(err).Write(w)
+}
+
 func (err ServerError) Write(w http.ResponseWriter) {
 	WriteJson(w, err.Errors, err.StatusCode)
 }
