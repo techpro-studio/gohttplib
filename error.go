@@ -23,7 +23,7 @@ func SafeConvertToServerError(err error)*ServerError{
 		return nil
 	}
 	serverErrorPtr, ok := err.(*ServerError)
-	if !ok {
+	if ok {
 		return serverErrorPtr
 	}
 	serverError, ok := err.(ServerError)
