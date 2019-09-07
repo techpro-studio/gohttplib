@@ -13,7 +13,7 @@ func HTTP400(description string) *ServerError {
 }
 
 func HTTP401() *ServerError {
-	return NewServerError(401, "UNAUTHORIZED", "", "", nil)
+	return NewServerError(401, "UNAUTHORIZED", "Please sign in. Thanks", "", nil)
 }
 
 func HTTP403(code string) *ServerError {
