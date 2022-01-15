@@ -26,6 +26,7 @@ func RecoverMiddleware(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
+				log.Printf("HTTP 500 %v", err)
 				HTTP500(err).Write(w)
 				return
 			}
@@ -47,4 +48,3 @@ func LoggingMiddleware(next http.Handler) http.Handler {
 
 	return http.HandlerFunc(fn)
 }
-
