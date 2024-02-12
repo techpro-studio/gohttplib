@@ -10,12 +10,17 @@ type Router interface {
 	Get(path string, handler http.Handler)
 	Post(path string, handler http.Handler)
 	Put(path string, handler http.Handler)
+	Patch(path string, handler http.Handler)
 	Delete(path string, handler http.Handler)
 	ServeHTTP(w http.ResponseWriter, req *http.Request)
 }
 
 type DefaultRouter struct {
 	DefaultRouter *httprouter.Router
+}
+
+func (self *DefaultRouter) Patch(path string, handler http.Handler) {
+	self.DefaultRouter.PATCH(path, wrapHandler(handler))
 }
 
 func (self *DefaultRouter) Get(path string, handler http.Handler) {
