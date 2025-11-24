@@ -1,24 +1,27 @@
 package gohttplib
 
 import (
+	"bufio"
 	"encoding/json"
 	"net/http"
 )
 
-func WriteJson(w http.ResponseWriter, value interface{}, code int) {
+func WriteJson(w http.ResponseWriter, v any, code int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
-	bytes, err := json.Marshal(value)
-	if err != nil {
-		panic(err)
+
+	bw := bufio.NewWriter(w)
+	enc := json.NewEncoder(bw)
+	enc.SetEscapeHTML(false)
+
+	if err := enc.Encode(v); err != nil {
+		return // log if needed
 	}
-	_, err = w.Write(bytes)
-	if err != nil {
-		panic(err)
-	}
+
+	bw.Flush()
 }
 
-func WriteJsonOrError(w http.ResponseWriter, value interface{}, code int, err error){
+func WriteJsonOrError(w http.ResponseWriter, value interface{}, code int, err error) {
 	if err != nil {
 		SafeConvertToServerError(err).Write(w)
 		return

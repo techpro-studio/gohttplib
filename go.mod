@@ -1,6 +1,6 @@
 module github.com/techpro-studio/gohttplib
 
-go 1.12
+go 1.25
 
 require (
 	github.com/golang/protobuf v1.3.2 // indirect
