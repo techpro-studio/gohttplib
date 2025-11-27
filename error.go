@@ -1,6 +1,7 @@
 package gohttplib
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 )
@@ -18,22 +19,24 @@ func (err ServerError) Error() string {
 	return err.Errors.Error()
 }
 
-func SafeConvertToServerError(err error)*ServerError{
-	if err == nil{
+func SafeConvertToServerError(err error) *ServerError {
+	if err == nil {
 		return nil
 	}
-	serverErrorPtr, ok := err.(*ServerError)
+	var serverErrorPtr *ServerError
+	ok := errors.As(err, &serverErrorPtr)
 	if ok {
 		return serverErrorPtr
 	}
-	serverError, ok := err.(ServerError)
-	if ok  {
+	var serverError ServerError
+	ok = errors.As(err, &serverError)
+	if ok {
 		return &serverError
 	}
 	return NewServerError(400, "UNDEFINED", err.Error(), "undefined", nil)
 }
 
-func WriteErr(w http.ResponseWriter, err error){
+func WriteErr(w http.ResponseWriter, err error) {
 	SafeConvertToServerError(err).Write(w)
 }
 
@@ -77,7 +80,7 @@ func (err Error) Error() string {
 
 func (errs Errors) Error() string {
 	errsStr := ""
-	for _, item := range errs.Errors{
+	for _, item := range errs.Errors {
 		errsStr += item.Description
 	}
 	return fmt.Sprintf("Occured %d errors. Details: %s", len(errs.Errors), errsStr)

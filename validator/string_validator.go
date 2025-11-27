@@ -2,10 +2,10 @@ package validator
 
 import (
 	"fmt"
-	"net/url"
-	"strings"
 	"github.com/johngb/langreg"
 	"github.com/techpro-studio/gohttplib"
+	"net/url"
+	"strings"
 )
 
 func StringValidator(key string) Validator {
